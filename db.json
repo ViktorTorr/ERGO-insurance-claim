@@ -1,10 +1,6 @@
 {
   "claimList": [
     {
-      "status": "accepted",
-      "id": "321ab5f0-a2ae-11e7-9a63-89df7411688a"
-    },
-    {
       "name": "Krystian Nowak",
       "email": "nowak.kryst@gmail.com",
       "policyId": "12312`",
@@ -23,16 +19,6 @@
       "incidentDate": "26/08/2017",
       "id": "5bf0b3c0-a2ae-11e7-a51c-d16116d969f3",
       "status": "rejected"
-    },
-    {
-      "name": "",
-      "email": "",
-      "policyId": "",
-      "claimType": "lostBaggage",
-      "claimAmount": "",
-      "incidentDate": "26/08/2017",
-      "id": "be735c50-a2ae-11e7-9e52-f32f29925669",
-      "status": "accepted"
     },
     {
       "name": "Krystian Nowak",

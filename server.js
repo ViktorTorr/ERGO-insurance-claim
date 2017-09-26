@@ -8,11 +8,11 @@ const API_PORT = 3004;
 
 const server = new WebpackDevServer(compiler, {
     publicPath: config.output.publicPath,
-    stats: { colors: true },
+    stats: {colors: true},
     proxy: {
         '/api/': {
             target: `http://localhost:${API_PORT}`,
-            pathRewrite: { '^/api/': '/' },
+            pathRewrite: {'^/api/': '/'},
         }
     }
 });

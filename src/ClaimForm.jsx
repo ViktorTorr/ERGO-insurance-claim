@@ -27,8 +27,8 @@ class ClaimForm extends Component {
 
     _getCurrentDate() {
         const currentDate = new Date();
-        const currentMonth = ('0'+currentDate.getMonth()).slice(-2);
-        const currentDay = ('0'+currentDate.getDate()).slice(-2);
+        const currentMonth = ('0' + currentDate.getMonth()).slice(-2);
+        const currentDay = ('0' + currentDate.getDate()).slice(-2);
         return `${currentDate.getFullYear()}-${currentMonth}-${currentDay}`;
     }
 
@@ -46,7 +46,8 @@ class ClaimForm extends Component {
                             Name
                         </Col>
                         <Col sm={10}>
-                            <FormControl required type="text" placeholder="Name" inputRef={(input) => this._name = input}/>
+                            <FormControl required type="text" placeholder="Name"
+                                         inputRef={(input) => this._name = input}/>
                         </Col>
                     </FormGroup>
 
@@ -55,7 +56,8 @@ class ClaimForm extends Component {
                             Email
                         </Col>
                         <Col sm={10}>
-                            <FormControl required  type="email" placeholder="Email" inputRef={(input) => this._email = input}/>
+                            <FormControl required type="email" placeholder="Email"
+                                         inputRef={(input) => this._email = input}/>
                         </Col>
                     </FormGroup>
 
@@ -64,7 +66,8 @@ class ClaimForm extends Component {
                             Policy Id
                         </Col>
                         <Col sm={10}>
-                            <FormControl required  type="text" placeholder="Policy Id" inputRef={(input) => this._policyId = input}/>
+                            <FormControl required type="text" placeholder="Policy Id"
+                                         inputRef={(input) => this._policyId = input}/>
                         </Col>
                     </FormGroup>
 
@@ -73,7 +76,8 @@ class ClaimForm extends Component {
                             Claim Type
                         </Col>
                         <Col sm={10}>
-                            <FormControl required componentClass="select" placeholder="select" inputRef={(input) => this._claimType = input}>
+                            <FormControl required componentClass="select" placeholder="select"
+                                         inputRef={(input) => this._claimType = input}>
                                 {claimList}
                             </FormControl>
                         </Col>
@@ -84,7 +88,8 @@ class ClaimForm extends Component {
                             Claim Amount
                         </Col>
                         <Col sm={10}>
-                            <FormControl required type="number" placeholder="Claim Amount" inputRef={(input) => this._claimAmount = input}/>
+                            <FormControl required type="number" placeholder="Claim Amount"
+                                         inputRef={(input) => this._claimAmount = input}/>
                         </Col>
                     </FormGroup>
 
