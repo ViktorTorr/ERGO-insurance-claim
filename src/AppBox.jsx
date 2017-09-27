@@ -16,10 +16,14 @@ class AppBox extends Component {
             claimSubmited: false,
             isLoggedIn: false
         }
+
+        this.addClaim = this.addClaim.bind(this);
+        this.authentication = this.authentication.bind(this);
+        this.updateClaim = this.updateClaim.bind(this);
     }
 
     render() {
-        const claims = this._getClaims();
+        const claims = this.getClaims();
         return (
             <Router>
                 <Grid>
@@ -32,12 +36,12 @@ class AppBox extends Component {
 
                     <PageHeader>Insurance Claims</PageHeader>
                     <Row className="show-grid">
-                        <Route exact='true' path="/" render={() => (
+                        <Route exact={true} path="/" render={() => (
                             <Col xs={12} md={8} mdOffset={2}>
-                                <ClaimForm addClaim={this._addClaim.bind(this)}/>
+                                <ClaimForm addClaim={this.addClaim}/>
                             </Col>
                         )}/>
-                        {this._claimSubmited()}
+                        {this.claimSubmited()}
                         <Route path="/claimSubmited" render={() => (
                             <Col xs={12} md={8} mdOffset={2}>
                                 <Jumbotron>
@@ -50,7 +54,7 @@ class AppBox extends Component {
                         )}/>
                         <Route path="/dashboard" render={() => (
                             <Col xs={12} md={8} mdOffset={2}>
-                                {this.state.isLoggedIn && claims || this._needAuth()}
+                                {this.state.isLoggedIn && claims || this.needAuth()}
                             </Col>
                         )}/>
                     </Row>
@@ -59,24 +63,24 @@ class AppBox extends Component {
         );
     }
 
-    _needAuth() {
+    componentWillMount() {
+        this.fetchClaims();
+    }
+
+    needAuth() {
         return (
             <Jumbotron>
                 <h3>You need to be logged in to access this page</h3>
-                <Button bsStyle='primary' onClick={this._authentication.bind(this)}>Log In</Button>
+                <Button bsStyle='primary' onClick={this.authentication}>Log In</Button>
             </Jumbotron>
         )
     }
 
-    componentWillMount() {
-        this._fetchClaims();
-    }
-
-    _authentication() {
+    authentication() {
         this.setState({isLoggedIn: !this.state.isLoggedIn});
     }
 
-    _claimSubmited() {
+    claimSubmited() {
         if (this.state.claimSubmited) {
             return (
                 <Redirect to='/claimSubmited'/>
@@ -84,19 +88,19 @@ class AppBox extends Component {
         }
     }
 
-    _getClaims() {
+    getClaims() {
         return this.state.claimList.map((claim) => {
             return (
                 <Claim
                     {...claim}
                     key={claim.id}
-                    updateClaim={this._updateClaim.bind(this)}
+                    updateClaim={this.updateClaim}
                 />
             )
         })
     }
 
-    _fetchClaims() {
+    fetchClaims() {
         $.ajax({
             method: 'GET',
             url: 'api/claimList',
@@ -106,7 +110,7 @@ class AppBox extends Component {
         });
     }
 
-    _addClaim(claimBody) {
+    addClaim(claimBody) {
         let claim = claimBody;
         claim.id = uuid.v1();
         claim.status = 'new';
@@ -122,13 +126,13 @@ class AppBox extends Component {
         })
     }
 
-    _updateClaim(id, status) {
+    updateClaim(id, status) {
         $.ajax({
             method: 'PATCH',
             url: `/api/claimList/${id}`,
             data: {'status': status},
-            success: (newComment => {
-                this._fetchClaims();
+            success: (() => {
+                this.fetchClaims();
             })
         })
     }

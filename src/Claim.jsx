@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
-import {Panel, Button, Col, ControlLabel, Clearfix} from 'react-bootstrap';
+import {Panel, Button, Col, Clearfix} from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 class Claim extends Component {
+    constructor () {
+        super();
+
+        this.updateClaim = this.updateClaim.bind(this);
+
+        const accepted = 'accepted';
+        const rejected = 'rejected';
+    }
     render() {
         return (
             <Panel header={`Claim Number: ${this.props.id} - ${this.props.status}`}
-                   bsStyle={this._getPanelStyle(this.props.status)}>
+                   bsStyle={this.getPanelStyle(this.props.status)}>
                 <Col md={4}>
                     <p>Claim Id: </p>
                 </Col>
@@ -59,7 +68,7 @@ class Claim extends Component {
         );
     }
 
-    _getPanelStyle(status) {
+    getPanelStyle(status) {
         if (status === 'new') {
             return 'primary'
         } else if (status === 'accepted') {
@@ -73,15 +82,26 @@ class Claim extends Component {
         if (status === 'new') {
             return (
                 <div>
-                    <Button bsStyle="success" onClick={this._updateClaim.bind(this, 'accepted')}>Accept</Button>
-                    <Button bsStyle="danger" onClick={this._updateClaim.bind(this, 'rejected')}>Reject</Button>
+                    <Button bsStyle="success" onClick={() => this.updateClaim('accepted')}>Accept</Button>
+                    <Button bsStyle="danger" onClick={() => this.updateClaim('rejected')}>Reject</Button>
                 </div>
             )
         }
     }
 
-    _updateClaim(status) {
+    updateClaim(status) {
         this.props.updateClaim(this.props.id, status);
     }
 }
+
+Claim.propTypes = {
+    name: PropTypes.string,
+    email: PropTypes.string,
+    policyId: PropTypes.string,
+    claimType: PropTypes.string,
+    claimAmount: PropTypes.string,
+    incidentDate: PropTypes.string,
+    updateClaim: PropTypes.func
+};
+
 export default Claim;

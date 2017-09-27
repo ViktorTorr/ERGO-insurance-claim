@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Panel, Form, FormGroup, ControlLabel, FormControl, Col, Button, Checkbox} from 'react-bootstrap';
+import {Panel, Form, FormGroup, ControlLabel, FormControl, Col, Button} from 'react-bootstrap';
 import DateTimeField from 'react-bootstrap-datetimepicker';
 
 class ClaimForm extends Component {
     constructor(props) {
         super(props);
 
-        const today = this._getCurrentDate();
+        const today = this.getCurrentDate();
 
         this.state = {
             dateFormat: {
@@ -23,24 +23,19 @@ class ClaimForm extends Component {
                 accident: 'Accident'
             }
         };
-    }
 
-    _getCurrentDate() {
-        const currentDate = new Date();
-        const currentMonth = ('0' + currentDate.getMonth()).slice(-2);
-        const currentDay = ('0' + currentDate.getDate()).slice(-2);
-        return `${currentDate.getFullYear()}-${currentMonth}-${currentDay}`;
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     render() {
         const {date, format, mode, inputFormat} = this.state.dateFormat;
         const claimTypes = this.state.claimType;
         const claimList = Object.keys(claimTypes).map((keyName, index) => {
-            return ( <option value={keyName}>{claimTypes[keyName]}</option> )
+            return ( <option key={`opt_${index}`} value={keyName}>{claimTypes[keyName]}</option> )
         });
         return (
             <Panel header="Fill out new claim form" bsStyle="success">
-                <Form horizontal onSubmit={this._handleSubmit.bind(this)}>
+                <Form horizontal onSubmit={this.handleSubmit}>
                     <FormGroup controlId="formHorizontalName">
                         <Col componentClass={ControlLabel} sm={2}>
                             Name
@@ -122,14 +117,22 @@ class ClaimForm extends Component {
         );
     }
 
-    _handleSubmit(event) {
+
+    getCurrentDate() {
+        const currentDate = new Date();
+        const currentMonth = ('0' + (currentDate.getMonth()+1)).slice(-2);
+        const currentDay = ('0' + currentDate.getDate()).slice(-2);
+        return `${currentDate.getFullYear()}-${currentMonth}-${currentDay}`;
+    }
+
+    handleSubmit(event) {
         event.preventDefault();
         let claimBody = {
             name: this._name.value,
             email: this._email.value,
-            policyId: this._policyId.value,
+            policyId: parseInt(this._policyId.value),
             claimType: this._claimType.value,
-            claimAmount: this._claimAmount.value,
+            claimAmount: parseInt(this._claimAmount.value),
             incidentDate: this._incidentDate.refs.datetimepicker.firstChild.value
         }
 
