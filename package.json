@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint src",
     "start": "node server.js",
-    "api": "json-server --watch db.json --port 3004",
+    "api": "json-server --watch db.json --port 3004"
   },
   "repository": "https://github.com/noahlotzer/react-simple-boilerplate.git",
   "keywords": [

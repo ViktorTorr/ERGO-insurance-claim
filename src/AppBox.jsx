@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ClaimForm from './ClaimForm.jsx';
 import Claim from './Claim.jsx';
+import ClaimConfirmation from './ClaimConfirmation.jsx';
 import {Grid, Row, Col, PageHeader, Jumbotron, Button} from 'react-bootstrap';
 import $ from 'jquery';
 import uuid from 'react-native-uuid';
@@ -18,6 +19,7 @@ class AppBox extends Component {
         }
 
         this.addClaim = this.addClaim.bind(this);
+        this.clearClaimSubmit = this.clearClaimSubmit.bind(this);
         this.authentication = this.authentication.bind(this);
         this.updateClaim = this.updateClaim.bind(this);
     }
@@ -44,12 +46,7 @@ class AppBox extends Component {
                         {this.claimSubmited()}
                         <Route path="/claimSubmited" render={() => (
                             <Col xs={12} md={8} mdOffset={2}>
-                                <Jumbotron>
-                                    <h3>Your Claim has been Submited</h3>
-                                    <Link to="">
-                                        <p>Go back to form</p>
-                                    </Link>
-                                </Jumbotron>
+                                <ClaimConfirmation clearClaimSubmit={this.clearClaimSubmit}/>
                             </Col>
                         )}/>
                         <Route path="/dashboard" render={() => (
@@ -135,6 +132,10 @@ class AppBox extends Component {
                 this.fetchClaims();
             })
         })
+    }
+
+    clearClaimSubmit() {
+        this.setState({claimSubmited: false});
     }
 }
 export default AppBox;
